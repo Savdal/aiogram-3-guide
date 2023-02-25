@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher, types
+from aiogram.filter import CommandStart, Command
 
 from config_reader import config
 
@@ -11,13 +12,13 @@ dp = Dispatcher()
 
 
 # Хэндлер на команду /start
-@dp.message(commands=["start"])
+@dp.message(CommandStart())
 async def cmd_start(message: types.Message):
     await message.answer("Hello!")
 
 
 # Хэндлер на команду /test1
-@dp.message(commands=["test1"])
+@dp.message(Command(commands=["test1"]))
 async def cmd_test1(message: types.Message):
     await message.answer("Test 1")
 
@@ -28,22 +29,22 @@ async def cmd_test2(message: types.Message):
     await message.reply("Test 2")
 
 
-@dp.message(commands=["answer"])
+@dp.message(Command(commands=["answer"]))
 async def cmd_answer(message: types.Message):
     await message.answer("Это простой ответ")
 
 
-@dp.message(commands=["reply"])
+@dp.message(Command(commands=["reply"]))
 async def cmd_reply(message: types.Message):
     await message.reply('Это ответ с "ответом"')
 
 
-@dp.message(commands=["dice"])
+@dp.message(Command(commands=["dice"]))
 async def cmd_dice(message: types.Message):
     await message.answer_dice(emoji="🎲")
 
 
-@dp.message(commands=["add_to_list"])
+@dp.message(Command(commands=["add_to_list"]))
 async def cmd_add_to_list(message: types.Message, mylist: list[int]):
     mylist.append(7)
     await message.answer("Добавлено число 7")
